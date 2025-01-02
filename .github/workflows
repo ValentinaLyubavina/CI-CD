@@ -20,6 +20,4 @@ build:
       - build/
   only:
     - merge_requests  
-    - staging
-    - main   
 
