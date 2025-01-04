@@ -1,5 +1,9 @@
-name: GitHub Actions Demo
-on: [push]
+name: GitHub Actions
+on: 
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ staging, main ]
 jobs:
     init:
         runs-on: ubuntu-latest
