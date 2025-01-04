@@ -10,39 +10,38 @@ on:
       - main
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [ 22.x ]
-        steps:
-            - users: actions/checkout@v3
-            - name: Starting Node.js ${{ matrix.node-version }}
-              users: actions/setup-node@v3
-              with: 
-                node-version: ${{ matrix.node-version }}
-            - name: Install modules
-              run: npm install
-            - name: Unit test
-              run: npm run test
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with: 
+          node-version: ${{ matrix.node-version }}
+      - name: Install modules
+        run: npm install
+      - name: Unit test
+        run: npm run test
               
-    build:
-      runs-on: ubuntu-latest
-      needs: test
-      if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'staging')
-      strategy:
-        matrix:
-          node-version: [22.x]
-      steps:
-          uses: actions/checkout@v3
-        - name: Set up Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{ matrix.node-version }}
-        - name: Install modules
-          run: npm install
-        - name: Build project
-          run: npm run build
-
-
-
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'staging')
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install modules
+        run: npm install
+      - name: Build project
+        run: npm run build
