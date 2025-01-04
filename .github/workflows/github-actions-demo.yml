@@ -8,7 +8,7 @@ jobs:
                 node-version: [ 22.x ]
         steps:
             - users: actions/checkout@v3
-            - name: Установка Node.js ${{ matrix.node-version }}
+            - name: Starting Node.js ${{ matrix.node-version }}
               users: actions/setup-node@v3
               with: 
                 node-version: ${{ matrix.node-version }}
